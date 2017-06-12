@@ -9,7 +9,7 @@ const MyQuery = gql`
       title
     }
   }
-`;
+`
 
 type Todo = {
   id: string,
@@ -19,31 +19,33 @@ type Todo = {
 type Props = {
   data: {
     loading: boolean,
-    todos: ?Array<Todo>
+    todos: ?Array<Todo>,
+    error: any,
   }
 }
 
-const MyComponent = (props: Props): React$Element => (
-  <div>
+const renderResult = (props: Props): React$Element => {
+  if (props.data.error) {
+    return <h1>Error</h1>
+  }
+
+  return (
     <ul>
       {
-        !props.data.loading &&
+        !props.data.loading && props.data.todos &&
         props.data.todos.map(
           (todo: Todo): Todo[] => <li key={todo.id}>{todo.title}</li>,
         )
       }
     </ul>
+  )
+}
+
+const MyComponent = (props: Props): React$Element => (
+  <div>
+    <h1>Todo List Example</h1>
+    { renderResult(props) }
   </div>
 )
 
-MyComponent.propTypes = {
-  data: PropTypes.shape({
-    loading: PropTypes.bool.isRequired,
-    todos: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-    })),
-  }).isRequired,
-}
-
-export default graphql(MyQuery)(MyComponent);
+export default graphql(MyQuery)(MyComponent)

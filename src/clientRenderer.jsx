@@ -6,16 +6,16 @@ import {
   ApolloClient,
   ApolloProvider,
   createNetworkInterface,
-} from 'react-apollo';
+} from 'react-apollo'
 import App from './components/App'
 
 const networkInterface = createNetworkInterface({
   uri: 'https://todo-mongo-graphql-server.herokuapp.com/graphql',
-});
+})
 
 const client = new ApolloClient({
   networkInterface,
-});
+})
 
 const render = (Component: React$Element) => {
   ReactDOM.render(

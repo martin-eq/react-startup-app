@@ -12,7 +12,10 @@
     "node": true
   },
   "rules": {
-    "semi": 0,
+    "semi": [
+      2,
+      "never"
+    ],
     "flowtype/boolean-style": [
       2,
       "boolean"
