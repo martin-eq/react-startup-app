@@ -1,4 +1,4 @@
-/* eslint-disable flowtype/require-parameter-type, flowtype/require-return-type */
+// @flow
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { AppContainer } from 'react-hot-loader'
@@ -7,17 +7,18 @@ import {
   ApolloProvider,
   createNetworkInterface,
 } from 'react-apollo'
-import App from './components/App'
+import App from 'src/components/App'
 
 const networkInterface = createNetworkInterface({
   uri: 'https://todo-mongo-graphql-server.herokuapp.com/graphql',
 })
 
 const client = new ApolloClient({
+  ssrMode: true,
   networkInterface,
 })
 
-export default function serverRenderer(opts) {
+export default function serverRenderer(opts: Object): Function {
   const Components = (
     <AppContainer>
       <ApolloProvider client={client}>
@@ -26,22 +27,11 @@ export default function serverRenderer(opts) {
     </AppContainer>
   )
 
-  const template = `
-      <!doctype html>
-      <html>
-      <head>
-          <title>React Startup App</title>
-      </head>
-      <body>
-          <div id="react-root">${renderToString(Components)}</div>
-          <script src="/webpack.js"></script>
-          <script src="/vendor.js"></script>
-          <script src="/client.js"></script>
-      </body>
-      </html>
-  `
-
   return (req, res) => {
+    const content = renderToString(Components)
+    debugger
+    const template = opts.template.replace(new RegExp(`<\\w+ id="${opts.appMountId}">`), `$&${content}`)
+
     res.status(200).send(template)
   }
 }

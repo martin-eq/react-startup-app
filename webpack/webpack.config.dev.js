@@ -1,6 +1,28 @@
 /* eslint-disable flowtype/require-return-type, flowtype/require-parameter-type */
 const webpack = require('webpack')
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackTemplate = require('html-webpack-template')
+
+const moduleConfig = {
+  rules: [
+    {
+      test: /.jsx?$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader',
+    },
+  ],
+}
+
+const resolveConfig = {
+  modules: [
+    'node_modules',
+    path.resolve(__dirname, '..'),
+  ],
+  extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
+}
+
+const contextConfig = path.resolve(__dirname, '..')
 
 const clientConfig = {
 
@@ -12,7 +34,7 @@ const clientConfig = {
     client: [
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
-      'clientRenderer.jsx',
+      'src/clientRenderer.jsx',
     ],
   },
 
@@ -21,36 +43,33 @@ const clientConfig = {
     filename: '[name].js',
   },
 
-  module: {
-    rules: [
-      {
-        test: /.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-      },
-    ],
-  },
+  module: moduleConfig,
 
-  resolve: {
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'src'),
-    ],
-    extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
-  },
+  resolve: resolveConfig,
 
   devtool: 'cheap-module-source-map',
 
-  context: __dirname,
+  context: contextConfig,
 
   plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'React Startup App',
+      template: HtmlWebpackTemplate,
+      filename: 'template.html',
+      appMountId: 'react-root',
+      inject: false,
+      minify: {
+        collapseWhitespace: true,
+        preserveLineBreaks: true,
+      },
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function minChunks(module) {
-        return module.context && module.context.indexOf('node_modules') !== -1
+      minChunks: function minChunks(mod) {
+        return mod.context && mod.context.indexOf('node_modules') !== -1
       },
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -67,7 +86,7 @@ const serverConfig = {
 
   target: 'node',
 
-  entry: 'serverRenderer.jsx',
+  entry: 'server/serverRenderer.jsx',
 
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -75,27 +94,13 @@ const serverConfig = {
     libraryTarget: 'commonjs2',
   },
 
-  module: {
-    rules: [
-      {
-        test: /.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-      },
-    ],
-  },
+  module: moduleConfig,
 
-  resolve: {
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'src'),
-    ],
-    extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
-  },
+  resolve: resolveConfig,
 
   devtool: 'cheap-module-source-map',
 
-  context: __dirname,
+  context: contextConfig,
 
   plugins: [
     new webpack.NamedModulesPlugin(),
