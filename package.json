@@ -5,12 +5,14 @@
   "private": true,
   "homepage": "https://github.com/martin-eq/react-startup-app#readme",
   "scripts": {
-    "start": "webpack",
+    "start": "npm run bundle-prod && npm run prod",
     "dev": "node server/start.js",
+    "prod": "NODE_ENV=production node server/start.js",
     "debug": "node --inspect --debug-brk server/start.js",
     "bundle": "webpack --config webpack/webpack.config.dev.js",
+    "bundle-prod": "webpack --config webpack/webpack.config.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "flow": "flow",
+    "flow": "flow || true",
     "lint": "eslint --ext .jsx --ext .js . || true"
   },
   "dependencies": {
