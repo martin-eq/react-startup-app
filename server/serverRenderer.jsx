@@ -29,7 +29,6 @@ export default function serverRenderer(opts: Object): Function {
 
   return (req, res) => {
     const content = renderToString(Components)
-    debugger
     const template = opts.template.replace(new RegExp(`<\\w+ id="${opts.appMountId}">`), `$&${content}`)
 
     res.status(200).send(template)

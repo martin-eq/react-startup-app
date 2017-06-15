@@ -8,6 +8,7 @@
     "start": "webpack",
     "dev": "node server/start.js",
     "debug": "node --inspect --debug-brk server/start.js",
+    "bundle": "webpack --config webpack/webpack.config.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "flow": "flow",
     "lint": "eslint --ext .jsx --ext .js . || true"

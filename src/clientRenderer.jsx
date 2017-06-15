@@ -17,7 +17,7 @@ const client = new ApolloClient({
   networkInterface,
 })
 
-const render = (Component: React$Element) => {
+const render = (Component: React$Element<any>) => {
   ReactDOM.render(
     <AppContainer>
       <ApolloProvider client={client}>

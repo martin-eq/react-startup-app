@@ -39,15 +39,15 @@ const clientConfig = {
   },
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '..', 'dist'),
     filename: '[name].js',
   },
+
+  devtool: 'cheap-module-source-map',
 
   module: moduleConfig,
 
   resolve: resolveConfig,
-
-  devtool: 'cheap-module-source-map',
 
   context: contextConfig,
 
@@ -89,16 +89,16 @@ const serverConfig = {
   entry: 'server/serverRenderer.jsx',
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '..', 'dist'),
     filename: 'server.js',
     libraryTarget: 'commonjs2',
   },
 
+  devtool: 'cheap-module-inline-source-map',
+
   module: moduleConfig,
 
   resolve: resolveConfig,
-
-  devtool: 'cheap-module-source-map',
 
   context: contextConfig,
 

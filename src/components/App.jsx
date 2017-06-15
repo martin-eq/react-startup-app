@@ -1,6 +1,6 @@
 // @flow
-import React, { PropTypes } from 'react'
-import { gql, graphql } from 'react-apollo';
+import React from 'react'
+import { gql, graphql } from 'react-apollo'
 
 const MyQuery = gql`
   {

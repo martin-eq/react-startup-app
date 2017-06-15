@@ -18,7 +18,9 @@ const opts = {
 }
 
 multiCompiler.plugin('done', () => {
-  opts.template = clientCompiler.outputFileSystem.readFileSync(`${clientCompiler.outputPath}/template.html`).toString('utf8')
+  opts.template = clientCompiler.outputFileSystem
+    .readFileSync(`${clientCompiler.outputPath}/template.html`)
+    .toString('utf8')
 })
 
 app.use(webpackDevMiddleware(multiCompiler))
