@@ -2,27 +2,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import {
-  ApolloClient,
-  ApolloProvider,
-  createNetworkInterface,
-} from 'react-apollo'
+import ApolloClient from 'src/apollo/client'
 import App from './components/App'
 
-const networkInterface = createNetworkInterface({
-  uri: 'https://todo-mongo-graphql-server.herokuapp.com/graphql',
-})
-
-const client = new ApolloClient({
-  networkInterface,
-})
-
-const render = (Component: React$Element<any>) => {
+const render = (Component: any) => {
   ReactDOM.render(
     <AppContainer>
-      <ApolloProvider client={client}>
-        <Component />
-      </ApolloProvider>
+      <Component client={ApolloClient} />
     </AppContainer>,
     document.getElementById('react-root'),
   )

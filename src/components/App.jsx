@@ -1,51 +1,19 @@
 // @flow
 import React from 'react'
-import { gql, graphql } from 'react-apollo'
-
-const MyQuery = gql`
-  {
-    todos {
-      id,
-      title
-    }
-  }
-`
-
-type Todo = {
-  id: string,
-  title: string,
-}
+import { ApolloProvider } from 'react-apollo'
+import List from './List'
 
 type Props = {
-  data: {
-    loading: boolean,
-    todos: ?Array<Todo>,
-    error: any,
-  }
+  client: Object,
 }
 
-const renderResult = (props: Props): React$Element => {
-  if (props.data.error) {
-    return <h1>Error</h1>
-  }
-
-  return (
-    <ul>
-      {
-        !props.data.loading && props.data.todos &&
-        props.data.todos.map(
-          (todo: Todo): Todo[] => <li key={todo.id}>{todo.title}</li>,
-        )
-      }
-    </ul>
-  )
-}
-
-const MyComponent = (props: Props): React$Element => (
-  <div>
-    <h1>Todo List Example</h1>
-    { renderResult(props) }
-  </div>
+const App = (props: Props): React$Element<any> => (
+  <ApolloProvider client={props.client}>
+    <div>
+      <h1>Pokemon List Example</h1>
+      <List />
+    </div>
+  </ApolloProvider>
 )
 
-export default graphql(MyQuery)(MyComponent)
+export default App
