@@ -17,7 +17,7 @@ const moduleConfig = {
 const resolveConfig = {
   modules: [
     'node_modules',
-    path.resolve(__dirname, '..'),
+    path.resolve(__dirname, '..', 'src'),
   ],
   extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
 }
@@ -34,7 +34,7 @@ const clientConfig = {
     client: [
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
-      'src/clientRenderer.jsx',
+      './src/clientEntry.jsx',
     ],
   },
 
@@ -86,7 +86,7 @@ const serverConfig = {
 
   target: 'node',
 
-  entry: 'server/serverRenderer.jsx',
+  entry: './server/serverEntry.jsx',
 
   output: {
     path: path.resolve(__dirname, '..', 'dist'),

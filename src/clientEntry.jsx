@@ -2,10 +2,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import ApolloClient from 'src/apollo/client'
-import App from './components/App'
+import ApolloClient from 'apollo/client'
+import App from 'components/App'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import type { FunctionalComponent } from 'react-flow-types'
 
-const render = (Component: any) => {
+const render = (Component: FunctionalComponent<{ client: ApolloClient }>) => {
   ReactDOM.render(
     <AppContainer>
       <Component client={ApolloClient} />
