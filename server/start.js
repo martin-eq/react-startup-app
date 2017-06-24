@@ -23,7 +23,17 @@ multiCompiler.plugin('done', () => {
     .toString('utf8')
 })
 
-app.use(webpackDevMiddleware(multiCompiler))
+app.use(webpackDevMiddleware(multiCompiler, {
+  stats: {
+    colors: true,
+    chunkModules: false,
+    modules: false,
+    chunks: false,
+    cached: false,
+    cachedAssets: false,
+    assetsSort: 'name',
+  },
+}))
 // NOTE: Only the client bundle needs to be passed to `webpack-hot-middleware`.
 app.use(webpackHotMiddleware(clientCompiler))
 app.use(webpackHotServerMiddleware(multiCompiler, {

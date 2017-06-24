@@ -3,6 +3,8 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackTemplate = require('html-webpack-template')
+const SimpleProgressPlugin = require('webpack-simple-progress-plugin')
+const nodeExternals = require('webpack-node-externals')
 
 const moduleConfig = {
   rules: [
@@ -55,6 +57,7 @@ const clientConfig = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new SimpleProgressPlugin(),
     new HtmlWebpackPlugin({
       title: 'React Startup App',
       template: HtmlWebpackTemplate,
@@ -102,8 +105,24 @@ const serverConfig = {
 
   context: contextConfig,
 
+  externals: [nodeExternals()],
+
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    Buffer: false,
+    __filename: true,
+    __dirname: true,
+  },
+
   plugins: [
     new webpack.NamedModulesPlugin(),
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
+      raw: true,
+      entryOnly: false,
+    }),
   ],
 
 }
